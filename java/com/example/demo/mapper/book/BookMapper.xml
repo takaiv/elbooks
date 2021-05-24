@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.book.BookMapper">
+
+	<resultMap id="Base_Result_Map" type="com.example.demo.entity.common.Book">
+	        <id column="book_id" property="book_id" jdbcType="INTEGER"/>
+	        <id column="max_num" property="max_num" jdbcType="INTEGER"/>
+	        <!-- <result column="user_name" property="" jdbcType="VARCHAR"/> -->
+    </resultMap>
+
+  	<select id="findAll" parameterType="int" resultMap="Base_Result_Map">
+    	select book_id, title, author from m_book where isdeleted = 0;
+    </select>
+
+ 	<insert id="save" useGeneratedKeys="true" keyProperty="book_id">
+  		insert into m_book (title, author) values(#{title}, #{author})
+
+  	</insert>
+
+  	<select id="maxbook" resultMap="Base_Result_Map">
+  		select max(book_id) as book_id from m_book
+  	</select>
+
+ 	<select id="findOne" resultMap="Base_Result_Map">
+		select * from m_book  where book_id = #{book_id}
+  	</select>
+
+ 	<update id="delete">
+  		update m_book set isdeleted = 1 where book_id = #{book_id}
+  	</update>
+
+   <update id="update">
+  	update m_book set title = #{title}, author =#{author} where book_id = #{book_id}
+  </update>
+
+
+</mapper>

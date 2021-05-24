@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+.imageBlock{
+    background-color: beige;
+    background-size: 100;
+    width: 47%; padding: 1em;
+    position: relative;
+    top: 30px;
+    left: 0px;
+    background-clip: content-box;
+}
+
+.bookImage{
+    position: relative;
+    top:10px;
+    left: 20px;
+}
+
+.inventory{
+    position: relative;
+    top:10px;
+    left: 130px;
+}
+
+.edit{
+    position: relative;
+    top:-430px;
+    left: 400px;
+}
+
+.bookTitle{
+    position: relative;
+    top:-430px;
+    left: 400px;
+}
+
+.author{
+    position: relative;
+    top:-430px;
+    left: 400px;
+}
+
+.bookPage{
+    position: relative;
+    top:-470px;
+    left: 470px;
+}
+
+.description{
+    position: relative;
+    top:-430px;
+    left: 400px;
+}
+
+.rental{
+    background-color: rgb(245, 31, 131);
+    color: white;
+    position: relative;
+    top:-300px;
+    left: 455px;
+    width: 240px;
+    height: 40px;
+    border: none;
+}
+
+.return{
+    background-color: rgb(204, 200, 202);
+    position: relative;
+    top:-240px;
+    left: 210px;
+    width: 240px;
+    height: 40px;
+    border: none;
+}
+
+.return-after-complete{
+    background-color: rgb(204, 200, 202);
+    position: relative;
+    top:-240px;
+    left: 455px;
+    width: 240px;
+    height: 40px;
+    border: none;
+}
+
+.book_visi {
+	visibility: hidden;
+}

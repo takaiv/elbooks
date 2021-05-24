@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.insert.InsertMapper">
+
+   <insert id="insertUser" parameterType = "com.example.demo.entity.common.User">
+      insert into m_user(user_name,mail,pass)values(#{user_name},#{mail},#{pass})
+      ON DUPLICATE KEY UPDATE mail = #{mail};
+   	</insert>
+
+</mapper>

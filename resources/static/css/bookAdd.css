@@ -1,0 +1,37 @@
+.contents-form {
+  position: absolute;
+  left: 50px;
+}
+
+.item {
+  display: inline-block;
+}
+
+.item-label::after {
+  content: " *必須";
+  color: #E00;
+}
+
+.form-input {
+  width: 500px;
+  height: 40px;
+  margin-bottom: 15px;
+  background: #f1f1f1;
+}
+
+.form-button {
+  text-align: right;
+}
+
+.form-button-login {
+  padding: 5px 40px;
+  background-color: #ff4f50;
+  color: #ffffff;
+  border-radius: 5%;
+  border: 2px solid #ff4f50;
+}
+
+.form-button-login:hover {
+  color: #ff4f50;
+  background: #ffffff;
+}

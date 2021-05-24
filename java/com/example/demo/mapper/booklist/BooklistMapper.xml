@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.demo.mapper.booklist.BooklistMapper">
+
+	<resultMap id="Base_Result_Map" type="com.example.demo.entity.common.Book">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+	</resultMap>
+
+    <!-- 書籍一覧表示 -->
+	<select id="findAll" resultMap="Base_Result_Map">
+		select * from m_book
+	</select>
+
+	<!-- 書籍名で検索 -->
+	<select id="findtitle" resultType="com.example.demo.entity.common.Book">
+		select * from m_book where title like CONCAT('%', #{title}, '%')
+	</select>
+
+	<!-- 著者名で検索 -->
+	<select id="findauthor" resultType="com.example.demo.entity.common.Book">
+		select * from m_book where author like CONCAT('%', #{title}, '%')
+	</select>
+
+</mapper>

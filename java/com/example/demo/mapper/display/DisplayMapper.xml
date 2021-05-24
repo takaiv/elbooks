@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.display.DisplayMapper">
+
+<select id="findBook" resultType="com.example.demo.entity.common.Book">
+   SELECT * FROM m_book;
+</select>
+
+<select id="findUser" resultType="com.example.demo.entity.common.User">
+   SELECT * FROM m_user where isdeleted = 0;
+</select>
+
+<select id="findByLoanUserId" resultType="com.example.demo.entity.common.Loan">
+    SELECT t_loan.user_id,t_loan.book_id,m_book.title,m_category.category,m_book.author,DATE_FORMAT(plan_day, '%Y/%m/%d')plan_day
+	FROM t_loan
+	JOIN m_user
+	ON t_loan.user_id = m_user.user_id
+	JOIN m_book
+	ON t_loan.book_id = m_book.book_id
+	JOIN m_category
+	ON m_category.category_id = m_book.category_id
+	where t_loan.user_id = #{t_loan.user_id};
+</select>
+
+</mapper>

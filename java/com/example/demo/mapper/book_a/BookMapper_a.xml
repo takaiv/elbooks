@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.book_a.BookMapper_a">
+
+	<select id="select"
+		resultType="com.example.demo.entity.common.Book">
+		select * from m_book;
+	</select>
+
+<select id="selectLengingBookOne"
+		resultType="com.example.demo.entity.display.lendingbook.LendingBook">
+		select * from m_book where book_id=#{book_id};
+	</select>
+
+	<insert id="insert"
+		parameterType="com.example.demo.entity.display.lendingbook.LendingBook">
+		INSERT INTO t_loan (book_id, user_id, plan_day)
+		VALUES (#{book_id}, #{user_id}, DATE_ADD(CURRENT_TIMESTAMP(),interval 14 day))
+	</insert>
+
+<select id="maxnumSelect" resultType="com.example.demo.entity.display.lendingbook.LendingBook">
+  	SELECT max_num FROM m_book WHERE book_id = #{book_id};
+  </select>
+
+	<update id="update"
+		parameterType="com.example.demo.entity.common.Book">
+		UPDATE m_book SET max_num = #{max_num} WHERE book_id = #{book_id};
+		</update>
+
+	<select id="bookSelect"
+		resultType="com.example.demo.entity.common.Book">
+		select * from m_book where book_id = #{book_id};
+	</select>
+
+	<!-- 貸出中書籍リスト -->
+	<select id="returnSelect"
+		resultType="com.example.demo.entity.display.lendingbook.LendingBook">
+		SELECT t_loan.book_id, t_loan.user_id,
+		m_book.title,m_category.category,m_book.author,plan_day
+		FROM t_loan,
+		m_user, m_book,m_category
+		where t_loan.user_id = m_user.user_id
+		and
+		t_loan.book_id = m_book.book_id
+		and m_category.category_id =
+		m_book.category_id
+		and t_loan.user_id = #{user_id};
+	</select>
+
+	<!-- t_historyに登録 書籍返却したよ〜履歴 -->
+	<insert id="returnInsert"
+		parameterType="com.example.demo.entity.common.History">
+		INSERT INTO t_history (book_id, user_id, loan_day)
+		VALUES (#{book_id}, #{user_id}, "2021-04-30");
+	</insert>
+
+	<!-- t_loanから返却した書籍のデータを削除 -->
+	<delete id="returnDelete"
+		parameterType="com.example.demo.entity.display.lendingbook.LendingBook">
+		DELETE FROM t_loan WHERE t_loan.book_id = #{book_id} AND t_loan.user_id = #{user_id} ;
+	</delete>
+
+</mapper>

@@ -1,0 +1,16 @@
+/* table */
+td img{
+  width: 150px;
+}
+
+.table-separate {
+  border-collapse: separate;
+  text-align: center;
+  margin-left: 10px;
+}
+
+.table-td {
+  padding: 20px 5px;
+  border: 2px solid #ffffff;
+  background-color: #f1f1f1;
+}
