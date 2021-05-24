@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script type="text/javascript"
+	src="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/js/rental.js}"
+	src="../static/js/rental.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../css/book.css">
+<title>Insert title here</title>
+</head>
+
+<script type="text/javascript">
+	/* $(document).ready(function() {
+
+		$('.returnTable').click(function() {
+
+			let td_book_title = $(this).children('td')[0].innerText;
+			$('#book_title').val(td_book_title);
+
+			let td_book_author = $(this).children('td')[1].innerText;
+			$('#book_author').val(td_book_author);
+
+			$('#returnModal').modal('show');
+		});
+	});*/
+
+	function returnModalButton(event) {
+
+		console.log(event.target.id);
+
+		$('#return_Book').val(event.target.id);
+	}
+</script>
+
+<body>
+	<table>
+		<tr th:each="returnBook: ${LendingBook}" class="returnTable">
+			<td th:text="${returnBook.book_id}"></td>
+			<td th:text="${returnBook.user_id}"></td>
+			<td th:text="${returnBook.title}"></td>
+			<td th:text="${returnBook.author}"></td>
+			<td th:text="${returnBook.category}"></td>
+			<td th:text="${returnBook.max_num}"></td>
+			<td><input type="button" onclick="returnModalButton(event)"
+				th:id="${returnBook.book_id}" class="btn btn-outline-primary eBtn"
+				data-toggle="modal" data-target="#returnModal"></td>
+			<!-- <td><a
+						class="btn btn-outline-primary eBtn" data-toggle="modal" data-target="#rentalModal">貸出モーダル</a></td> -->
+		</tr>
+	</table>
+
+	<!-- 返却モーダル -->
+	<div class="modal fade" id="returnModal" tabindex="-1" role="dialog"
+		aria-labelledby="Modal" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="imageBlock">
+						<img class="bookImage" src="../images/book.png" alt="">
+						<p class="inventory">在庫数1冊</p>
+					</div>
+					<a th:href="@{/bookrental}" class="edit">編集する</a>
+					<p class="bookTitle"></p>
+					<input type="text" id="book_title">
+					<p class="author"></p>
+					<input type="text" id="book_author">
+					<p class="bookPage">ページ数:210枚</p>
+					<p class="description"></p>
+					<form th:action="@{/elbooks/returnbook}" th:method="post">
+						<button type="submit" id="return_Book"
+							class="return-after-complete" th:value="${history.book_id}"
+							name="returnBookId">返却</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

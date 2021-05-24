@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/css/bookHistory.css">
+<link rel="stylesheet" href="/css/mypage.css">
+<title>Document</title>
+</head>
+<body>
+
+	<header>
+	<p th:text="${userAuth}"></p>
+	<p th:text="${userName}"></p>
+	<p th:text="${isAuthenticated}"></p>
+	<p th:text="${#authentication.principal.username}"></p>
+	<p th:text="${#authentication.principal.LoginUser.user_id}"></p>
+	
+		<img src="/images/elbook_logo.jpeg">
+		<nav class="header-nav">
+			<ul class="menu">
+				<li><a class="header-menu" href="#">貸出リスト</a></li>
+				<li><a class="header-menu" href="#">お問い合わせ</a></li>
+				<li class="header-dropdown"><a class="header-menu" href="#">アカウント&リスト▼</a>
+					<ul>
+						<li th:if="${#authentication.principal.LoginUser.admin_flg == 1}"><a href="#">ユーザー新規追加</a></li>
+						<li><a href="#">ユーザー情報変更</a></li>
+						<li><a href="#">書籍新規登録</a></li>
+						<li><a href="#">ユーザー一覧</a></li>
+						<li><a href="#">お問い合わせ一覧</a></li>
+						<li><button>ログアウト</button></li>
+					</ul></li>
+			</ul>
+		</nav>
+		<ul>
+			<li sec:authorize="hasRole('ADMIN')"><a href="#">ユーザー新規追加</a></li>
+			<li><a href="#">ユーザー情報変更</a></li>
+			<li sec:authorize="hasRole('ADMIN')"><a href="#">書籍新規登録</a></li>
+			<li sec:authorize="hasRole('ADMIN')"><a href="#">ユーザー一覧</a></li>
+			<li sec:authorize="hasRole('ADMIN')"><a href="#">お問い合わせ一覧</a></li>
+			<li><button>ログアウト</button></li>
+		</ul>
+
+	</header>
+
+
+	<main>
+		<form>
+			<div class="buru">
+				<div class="menu">
+					<ul>
+						<li><a href="#">Menu 01</a>
+							<ul>
+								<li><a href="#">漫画</a></li>
+								<li><a href="#">ビジネス書</a></li>
+								<li><a href="#">自己啓発書</a></li>
+								<li><a href="#">参考書</a></li>
+							</ul></li>
+				</div>
+				<form method="get" action="#" class="search_container">
+					<input type="text" size="25" placeholder="　キーワード検索"><input
+						type="submit" value="&#xf002">
+				</form>
+			</div>
+		</form>
+
+		<script
+			src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+		<script src="chosen.jquery.js"></script>
+		<script>
+			$(".chosen-select").chosen()
+		</script>
+		<div class="book">
+			<p>📖書籍一覧（全ての書籍）</p>
+		</div>
+		<div class="grid">
+			<div class="item">
+				<img
+					src="https://images-na.ssl-images-amazon.com/images/I/51YGBV4R7CL.jpg"
+					alt="" />
+				<p>ドラゴンボール</p>
+				<p>鳥山明</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://images-na.ssl-images-amazon.com/images/I/71iR-PrLBpL.jpg"
+					alt="" />
+				<p>キングダム</p>
+				<p>原泰久</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://images-na.ssl-images-amazon.com/images/I/6102HGQDRWL.jpg"
+					alt="" />
+				<p>NARUTO</p>
+				<p>岸本斉史</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://www.mangazenkan.com/upload/save_image/362/SI-01-PT01.jpg"
+					alt="" />
+				<p>ジョジョの奇妙な冒険</p>
+				<p>荒木飛呂彦</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://www.cmoa.jp/data/image/title/title_0000037770/VOLUME/100000377700001.jpg"
+					alt="" />
+				<p>鋼の錬金術師</p>
+				<p>荒川弘</p>
+			</div>
+			<div class="item">
+				<img src="https://m.media-amazon.com/images/I/518CYcUVM1L.jpg"
+					alt="" />
+				<p>
+					オブジェクト指向で<br>なぜつくるのか
+				</p>
+				<p>平澤章</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://images-na.ssl-images-amazon.com/images/I/81sBKxze5ML.jpg"
+					alt="" />
+				<p>
+					ネットワークは<br>なぜつながるのか
+				</p>
+				<p>戸根勤</p>
+			</div>
+			<div class="item">
+				<img src="https://www.amazon.co.jp/images/I/41EE6VN4JCL.jpg" alt="" />
+				<p>
+					SEのための<br>コミュニケーション実践塾
+				</p>
+				<p>田中淳子</p>
+			</div>
+			<div class="item">
+				<img src="https://m.media-amazon.com/images/I/51vVt0pPhxL.jpg"
+					alt="" />
+				<p>
+					宝くじで1億円<br>当たった人の末路
+				</p>
+				<p>鈴木信</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://images-na.ssl-images-amazon.com/images/I/51twSTBBH1L._SX298_BO1,204,203,200_.jpg"
+					alt="" />
+				<p>
+					SEのための<br>「どこでもやれる力」<br>の付け方
+				</p>
+				<p>野口和裕</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://images-na.ssl-images-amazon.com/images/I/81GK14aFPAL.jpg"
+					alt="" />
+				<p>日本再興戦略</p>
+				<p>落合陽一</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://images-na.ssl-images-amazon.com/images/I/41AY8WEF74L.jpg"
+					alt="" />
+				<p>
+					新！ 働く理由111<br>の名言に学ぶシゴト論
+				</p>
+				<p>戸田智弘</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://www.kinokuniya.co.jp/images/goods/ar2/web/imgdata2/large/48454/4845421615.jpg"
+					alt="" />
+				<p>
+					今こそ学べ坂本龍馬・<br>感動のの人生哲学
+				</p>
+				<p>百瀬昭次</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://images-na.ssl-images-amazon.com/images/I/41AY8WEF74L.jpg"
+					alt="" />
+				<p>
+					マネジメント<br>基本と原則
+				</p>
+				<p>
+					P・Fドラッカー著<br>上田惇生翻訳</br>
+				</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://images-na.ssl-images-amazon.com/images/I/51twSTBBH1L._SX298_BO1,204,203,200_.jpg"
+					alt="" />
+				<p>
+					SEのための<br>「どこでもやれる力」<br>の付け方
+				</p>
+				<p>野口和裕</p>
+			</div>
+
+
+			<div class="item">
+				<img src="https://www.seshop.com/static/images/product/18948/LL.jpg"
+					alt="" />
+				<p>Spring徹底入門</p>
+				<p>株式会社NTTデータ</p>
+			</div>
+			<div class="item">
+				<img src="https://www.seshop.com/static/images/product/14483/L.png"
+					alt="" />
+				<p>
+					スラスラわかるC言語<br>知識ゼロから<br>プログラムが作れる
+				</p>
+				<p>岡嶋裕史</p>
+			</div>
+			<div class="item">
+				<img
+					src="http://image.gihyo.co.jp/assets/images/cover/2020/9784297117832.jpg"
+					alt="" />
+				<p>
+					キタミ式<br>応用情報技術者試験
+				</p>
+				<p>きたみりゅうじ</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://images-na.ssl-images-amazon.com/images/I/9160JJpexVL.jpg"
+					alt="" />
+				<p>
+					スッキリわかる<br>SQL入門第2版<br>ドリル222問付き！
+				</p>
+				<p>
+					中山清喬/飯田理恵子・著<br>株式会社フレアリンク・監修
+				</p>
+			</div>
+			<div class="item">
+				<img
+					src="https://images-na.ssl-images-amazon.com/images/I/81S8HvSCIsL.jpg"
+					alt="" />
+				<p>
+					スッキリわかる<br>Java入門第2版
+				</p>
+				<p>中山清喬/国本大吾・著</p>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

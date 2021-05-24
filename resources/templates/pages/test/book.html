@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"type="text/css" href="../css/book.css">
+<title>Insert title here</title>
+</head>
+<body>
+
+<button type = "button" data-toggle = "modal" data-target = "#rentalModal">貸出モーダル</button>
+<button type = "button" data-toggle = "modal" data-target = "#returnModal">返却モーダル</button>
+
+	<!-- 貸出モーダル -->
+	<div class="modal fade" id="rentalModal" tabindex="-1" role="dialog"aria-labelledby="Modal" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class = "imageBlock">
+            			<img class = "bookImage"  src="../images/book.png" alt="">
+            			<p class = "inventory">在庫数1冊</p>
+        			</div>
+        			<a th:href="@{/bookrental}" class = "edit">編集する</a>
+        			<p class = "bookTitle">キングダム61(ヤングジャンプコミックス)</p>
+        			<p class = "author">原泰久 |</p>
+        			<p class = "bookPage">ページ数:210枚</p>
+        			<p class = "description">テキストテキストテキストテキストテキストテキスト</p>
+        			<button type = "submit" class = "rental" onSubmit="return check()">借りる</button>
+        			<button type = "submit" class = "return">返却</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 返却モーダル -->
+	<div class="modal fade" id="returnModal" tabindex="-1" role="dialog"aria-labelledby="Modal" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class = "imageBlock">
+            			<img class = "bookImage"  src="../images/book.png" alt="">
+            			<p class = "inventory">在庫数1冊</p>
+        			</div>
+        			<a th:href="@{/bookrental}" class = "edit">編集する</a>
+        			<p class = "bookTitle">キングダム61(ヤングジャンプコミックス)</p>
+        			<p class = "author">原泰久 |</p>
+        			<p class = "bookPage">ページ数:210枚</p>
+        			<p class = "description">テキストテキストテキストテキストテキストテキスト</p>
+        			<button type = "submit" class = "return-after-complete">返却</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

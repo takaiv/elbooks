@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script type="text/javascript"
+	src="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/js/rental.js}"
+	src="../static/js/rental.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../css/book.css">
+<title>Insert title here</title>
+<script th:fragment="rentalmodal_script" type="text/javascript"
+	th:inline="javascript">
+	$(document)
+			.ready(
+					function() {
+
+						$('.rentalTable')
+								.click(
+										function() {
+
+											/* タイトルの取得とモーダルのタグテキストの値書き換え */
+											let p_book_title = $(this)
+													.children('p')[0].innerText;
+											$('#book_title').val(p_book_title);
+
+											/* 著者の取得とモーダルのタグテキストの値書き換え */
+											let p_book_author = $(this)
+													.children('p')[1].innerText;
+											$('#book_author')
+													.val(p_book_author);
+
+											/* ページ数の取得とモーダルのタグテキストの値書き換え */
+											let book_page = $(this).children(
+													'p')[2].innerText;
+											$('#book_page').val(book_page);
+
+											/* book_idの取得とモーダルのタグテキストの値書き換え */
+											let p_book_id = $(this).children(
+													'p')[3].innerText;
+											$('#book_id').val(p_book_id);
+											$('#rentalBookId').val(p_book_id);
+
+											/* 残り冊数の取得とモーダルのformボタンの値書き換え */
+											let p_book_maxnum = $(this)
+													.children('p')[4].innerText;
+											$('#book_maxnum').val(
+													parseInt(p_book_maxnum));
+
+											/* 残り冊数の取得とモーダルのformボタンの値書き換え */
+											$('#rental_maxnum_2').val(
+													p_book_maxnum);
+
+											/* モーダルのimageタグの値書き換え */
+											let element_1 = document
+													.getElementById('image');
+											element_1.src = `../images/${p_book_id}.jpg`;
+
+											/* モーダルの編集用タグの値書き換え */
+											let element_2 = document
+													.getElementById('edit_link');
+											element_2.href = `/elbooks/book/${p_book_id}`;
+
+											/* レンタルformのアクション値書き換え */
+											document
+													.getElementById('rental_button_form').action = `/elbooks/book/${p_book_id}`;
+													
+													/* 返却formのアクション値書き換え */
+													document
+															.getElementById('return_button_form').action = `/elbooks/returnbook/${p_book_id}`;
+													
+											/* 残り冊数の判定とボタン機能on/off */
+											if (p_book_maxnum > 0) {
+												$('#rental_maxnum_1').val(
+														p_book_maxnum);
+												/* visibilityプロパティの書き換え */
+												document
+														.getElementById('rental_button_form').style.visibility = "visible";
+											} else {
+												/* visibilityプロパティの書き換え */
+												document
+														.getElementById('rental_button_form').style.visibility = "hidden";
+											}
+
+											$('#rentalModal').modal('show');
+										});
+					});
+
+	function rentalModalButton(event) {
+
+		console.log(event.target.id);
+
+		$('#rental_Book').val(event.target.id);
+
+	}
+</script>
+</head>
+
+<body>
+	<div>
+		<div>
+			<!-- <p th:text="${book.title}"></p>
+			<p th:text="${book.author}"></p>
+			<p th:text="${book.max_num}"></p>
+			<p><a th:href=@{/elbooks/book}>貸出</a></p>
+			<p>
+				<button type="button" data-toggle="modal" data-target="#rentalModal">貸出モーダル</button>
+			</p> -->
+
+			<table>
+				<tr th:each="book: ${Book}" class="rentalTable">
+					<td th:text="${book.title}"></td>
+					<td th:text="${book.author}"></td>
+					<td th:text="${book.max_num}"></td>
+					<td><input type="button" onclick="rentalModalButton(event)"
+						th:id="${book.book_id}" class="btn btn-outline-primary eBtn"
+						data-toggle="modal" data-target="#rentalModal"></td>
+					<!-- <td><a
+						class="btn btn-outline-primary eBtn" data-toggle="modal" data-target="#rentalModal">貸出モーダル</a></td> -->
+				</tr>
+			</table>
+		</div>
+
+
+		<!-- <div th:each="book: ${Book}">
+		<p th:text="${book.title}"></p>
+		<p th:text="${book.author}"></p>
+		<p th:text="${book.max_num}"></p>
+	</div> -->
+
+		<!-- 貸出モーダル -->
+		<div th:fragment="rentalmodal" class="myForm">
+			<div class="modal fade" id="rentalModal" tabindex="-1" role="dialog"
+				aria-labelledby="Modal" aria-hidden="true">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-body">
+							<div class="imageBlock">
+								<img id="image" class="bookImage" src="../images/book.png"
+									alt="">
+								<p class="inventory">在庫数1冊</p>
+							</div>
+
+							<a href="#" class="edit" id="edit_link">編集する</a>
+							<!-- <p class="bookTitle"></p>
+
+							<input type="text" id="book_title" class="bookTitle">
+							<p class="author"></p>
+							<input type="text" id="book_author" class="author">
+
+							<p class="bookPage"></p>
+							<input type="text" id="book_page">
+							<p class="book_id"></p>
+							<input type="text" id="book_id">
+							<p class="description"></p>
+							<input type="text" id="book_maxnum"> -->
+							<!-- レンタルボタン -->
+							<form th:action="@{/elbooks/book/}" th:method="post"
+								id="rental_button_form" >
+								<input type="hidden" id="rental_maxnum_1" name="rental_maxnum">
+								<input type="hidden" id="rentalBookId" name="rentalBookId">
+								<!-- タスク：disabledかdisplayかvisibilityで表示非表示切り替えor活性/非活性切り替えできるようにする -->
+								<!-- タスク2：1ユーザーは同じタイトルの本を1冊だけ借りることができるロジック（判定文）を書く -->
+								<button type="submit" class="rental">借りる</button>
+							</form>
+
+							<!-- /レンタルボタン -->
+
+							<!-- 返却ボタン -->
+							<!-- th:valueが原因で表示されなかった -->
+							<form th:action="@{/elbooks/book}" th:method="post"
+								th:object="${lendingBook}" id ="return_button_form">
+								<input type="hidden" id="rental_maxnum_2" name="max_num">
+								<!-- タスク1：disabledかdisplayかvisibilityで表示非表示切り替えor活性/非活性切り替えできるようにする -->
+								<!-- タスク2：借りている場合のみ返却できるロジック(select文の編集、htmlの書き換え、javascriptの判定文)を書く -->
+								<button type="submit" class="return">返却</button>
+							</form>
+							<!-- /返却ボタン -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

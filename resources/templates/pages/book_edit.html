@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head
+	th:replace="/pages/header :: meta_header('本の編集',~{::link},~{::script})">
+<link rel="stylesheet" type="text/css" href="/css/bookHistory.css">
+<link rel="stylesheet" type="text/css" href="/css/book_edit.css">
+<link rel="stylesheet" type="text/css" href="/css/header.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+	crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<header th:replace=" /pages/header :: header"> </header>
+	<main>
+		<div class="margin">
+			<form th:action="@{/books/{bookId}/update (bookId=*{book_id})}"
+				th:object="${book}">
+
+				<div class="input-box">
+					<p>
+						<i class="fas fa-book-open"></i> 書籍編集
+					</p>
+				</div>
+
+
+				<div class="input-field">
+					<label for="name">書籍名:</label> <input name="book_name" type="text"
+						class="feedback-input" th:field="*{title}">
+				</div>
+
+				<div class="input-field">
+					<label for="name">著者名:</label> <input name="mailaddress"
+						type="text" class="feedback-input" th:field="*{author}" />
+				</div>
+
+				<div input-box>
+					<p>カバー写真</p>
+					<div class="batsu">×</div>
+					<div>
+						<img class="img" src="img.jpg">
+					</div>
+				</div>
+
+
+				<div class="input-box right">
+					<input type="submit" value="編集する" />
+				</div>
+			</form>
+
+
+			<form th:action="@{/books/{bookId}/delete(bookId=*{book_id})}" th:object="${book}">
+				<div class="input-box right">
+					<input type="submit" name="delete" value="削除する" />
+				</div>
+			</form>
+
+		</div>
+	</main>
+
+
+</body>
+
+</html>

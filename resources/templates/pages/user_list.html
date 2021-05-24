@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head
+	th:replace="/pages/header :: meta_header('ユーザー一覧画面',~{::link},~{::script})">
+
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/userlist.css">
+<link rel="stylesheet" type="text/css" href="../css/header.css">
+
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		console.log("test");
+
+		$('.list').click(function() {
+			let td_user_id = $(this).children('td')[0].innerText;
+			let td_user_name = $(this).children('td')[1].innerText;
+			let td_user_mail = $(this).children('td')[2].innerText;
+
+			$('#userId').val(td_user_id);
+			$('#deleteId').val(td_user_id);
+
+			$('#userName').val(td_user_name);
+			$('#userMail').val(td_user_mail);
+			$('#userEditModal').modal('show');
+
+			$('#update').click(function() {
+				$('#regist').submit();
+			});
+
+			$('#delete').click(function() {
+				$('#drop').submit();
+			});
+		});
+	});
+</script>
+<body>
+	<header th:replace=" /pages/header :: header"> </header>
+	<main>
+		<!-- <nav>
+           <button type = "button" class = "userEntryModalButton" data-toggle = "modal" data-target = "#userEntryModal">ユーザー新規登録</button>
+        </nav> -->
+		<p>
+			<i class="fas fa-users"></i>ユーザー一覧
+		</p>
+
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>ユーザーネーム</th>
+				<th>メールアドレス</th>
+			</tr>
+			<tr class="list" th:each="user : ${userList}">
+				<td th:text="${user.user_id}"></td>
+				<td th:text="${user.user_name}"></td>
+				<td th:text="${user.mail}"></td>
+			</tr>
+		</table>
+
+		<!-- ユーザー登録モーダル -->
+		<div id="userEntryModal" class="modal fade" tabindex="-1"
+			role="dialog" aria-labelledby="Modal" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="Form">
+							<h2 class="title">
+								<i class="far fa-envelope"></i> ユーザー新規登録
+							</h2>
+						</div>
+						<form th:action="@{/user/add}" th:object="${user}" method="post">
+							<div class="Form-Item">
+								<div class="inline-block">
+									<label>ユーザー名<span class="">※必須</span></label> <input
+										class="Form-input-Item" type="text" th:field="*{user_name}"
+										required>
+								</div>
+								<div class="inline-block">
+									<label>メールアドレス<span class="">※必須</span></label> <input
+										class="Form-input-Item" name="mail" type="email"
+										th:field="*{mail}" required>
+								</div>
+								<div class="inline-block">
+									<label>パスワード<span class="">※必須</span></label> <input
+										class="Form-input-ItemEntry" type="password"
+										th:field="*{pass}" required>
+								</div>
+								<div class="inline-block button">
+									<button class="Entry-Button">送信する</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ユーザー編集モーダル -->
+		<div id="userEditModal" class="modal fade" tabindex="-1" role="dialog"
+			aria-labelledby="Modal" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="Form">
+							<h2 class="title">
+								<i class="far fa-envelope"></i> ユーザー編集
+							</h2>
+						</div>
+						<form th:action="@{/user/edit}" id="regist" th:object="${user}"
+							method="post">
+
+							<div class="Form-Item">
+								<div class="inline-block">
+									<label>ユーザー名<span class="">※必須</span></label> <input
+										class="Form-input-Item" type="text" th:field="*{user_name}"
+										required>
+								</div>
+								<div class="inline-block">
+									<label>メールアドレス<span class="">※必須</span></label> <input
+										class="Form-input-Item" type="email" th:field="*{mail}"
+										required>
+								</div>
+								<div class="inline-block">
+									<label>パスワード<span class="">※必須</span></label> <input
+										class="Form-input-Item" type="password" th:field="*{pass}"
+										required>
+								</div>
+								<div class="inline-block button">
+									<input type="hidden" id="userId" name="userId"
+										th:value="${user.user_id}">
+									<button class="Send-Button">送信する</button>
+								</div>
+							</div>
+						</form>
+
+						<form th:action="@{/user/delete}" id="drop" th:object="${user}"
+							method="post">
+							<input type="hidden" id="deleteId" name="userId"
+								th:value="${user.user_id}">
+							<button type="submit" class="delete-Button" id="delete">削除する</button>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

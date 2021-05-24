@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:fragment="meta_header(title,links,scripts)">
+<!-- (1)共通で読み込むmeta -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- (2)共通で読み込むCSS/JS -->
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+<link rel="stylesheet" type="text/css" href="../css/header.css">
+
+<!-- (3)タイトルのフォーマット -->
+<title th:text="${title}+' | sample app'">各ページタイトル | sample app</title>
+<title>ヘッダー画面</title>
+
+<!-- (4)各View固有で読み込むもの -->
+<th:block th:replace="${links} ?: _" />
+<th:block th:replace="${scripts} ?: _" />
+</head>
+<body>
+	<header th:fragment="header">
+		<img src="../images/elbook_logo.jpeg">
+		<ul>
+		<li th:text="ようこそ：+${#authentication.principal.LoginUser.user_name}+さん"></li>
+		<li th:text="権限：+${#authentication.principal.authorities}"></li>
+		</ul>
+		<nav class="header-nav">
+			<ul class="menu">
+				<li><a th:href="@{/mypage}">HOME</a></li>
+				<li><a th:href="@{/loanlist}">貸出リスト</a></li>
+				<li><a th:href="@{/contact}">お問い合わせ</a></li>
+				<li><a href="#">アカウント&リスト▼</a>
+					<ul>
+						<li th:if="${#authentication.principal.LoginUser.admin_flg == 1}"><a
+							th:href="@{/books/book_add}">書籍新規登録</a></li>
+						<li th:if="${#authentication.principal.LoginUser.admin_flg == 1}"><a
+							th:href="@{/user/list}">ユーザー一覧</a></li>
+						<li th:if="${#authentication.principal.LoginUser.admin_flg == 1}"><a
+							th:href="@{/contactUs_mgt}">お問い合わせ一覧</a></li>
+						<li><a href="/logout">ログアウト</a></li>
+					</ul></li>
+
+			</ul>
+
+		</nav>
+	</header>
+
+
+</body>
+</html>

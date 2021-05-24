@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head
+	th:replace="/pages/header :: meta_header('Document',~{::link},~{::script})">
+<link rel="stylesheet" type="text/css" href="/css/bookHistory.css">
+<link th:href="@{/css/mypage.css}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../css/book.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../css/header.css">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script type="text/javascript"
+	src="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script th:replace=" /pages/booklist :: rentalmodal_script"></script>
+</head>
+
+<body>
+	<header th:replace=" /pages/header :: header"> </header>
+	<main>
+
+		<!-- 検索 -->
+		<form th:action="@{/myseach}" th:object="${book}" method="POST">
+			<select name="select1" onchange="change(this)">
+				<option>カテゴリ</option>
+				<option value="ビジネス書">ビジネス書</option>
+				<option value="参考書">参考書</option>
+				<option value="漫画">漫画</option>
+				<option value="自己啓発">自己啓発</option>
+			</select> <input type="search" name="title" size="30"
+				placeholder="書籍名or著者名で検索"> <input type="submit" value="🔍">
+		</form>
+
+
+
+		<div class="book">
+			<div class="head">
+				<p>📖書籍一覧（全ての書籍）</p>
+			</div>
+		</div>
+		<!-- 	本一覧表示 -->
+		<div class="grid">
+			<!-- 左のbookがループの指定/右がコントローラー -->
+			<div class="item rentalTable"  th:each="book:${books}">
+				<img th:src="@{images/{bookId}.jpg(bookId=*{book.book_id})}">
+				<p th:text="'書籍名:'+${book.title}"></p>
+				<!-- <a class="booklink"
+					th:href="@{books/{bookId}/{id}(bookId=*{book.book_id})}"></a> -->
+				<p th:text="'著者名:'+${book.author}"></p>
+				<p hidden th:text="*{book.page}" > </p>
+				<p hidden th:text="*{book.book_id}" > </p>
+				<p hidden th:text="*{book.max_num}"> </p>
+				
+			</div>
+		</div>
+
+		<!-- 	タイトル検索 -->
+		<div class="grid">
+			<!-- 左のbookがループの指定/右がコントローラー -->
+			<div class="item" th:each="book:${seach}">
+				<img th:src="@{images/{bookId}.jpg(bookId=*{book.book_id})}">
+				<p th:text="'書籍名:'+${book.title}"></p>
+				<a class="booklink"
+					th:href="@{books/{bookId}/{id}(bookId=*{book.book_id})}"></a>
+				<p th:text="'著者名:'+${book.author}"></p>
+			</div>
+		</div>
+
+		<!-- 著者検索 -->
+		<div class="grid">
+			<!-- 	左のbookがループの指定/右がコントローラー -->
+			<div class="item" th:each="book:${seachs}">
+				<img th:src="@{images/{bookId}.jpg(bookId=*{book.bookId})}">
+				<p th:text="'書籍名:'+${book.title}"></p>
+				<a class="booklink"
+					th:href="@{books/{bookId}/{id}(bookId=*{book.book_id})}"></a>
+				<p th:text="'著者名:'+${book.author}"></p>
+			</div>
+		</div>
+		-->
+		<!-- 原追加部分 -->
+		<!-- 書籍表示（画像）と編集・削除の画面遷移できます -->
+		<div class="grid">
+			<div class="item" th:each="book : ${books}">
+				<img th:src="@{/images/{bookId}.jpg(bookId=*{book.book_id})}">
+
+				<p th:text="'書籍名：'+${book.title}"></p>
+				<a class="booklink"
+					th:href="@{/books/ed/{bookId} (bookId=*{book.book_id}) }"></a>
+
+
+				<p th:text="'著者名：'+${book.author}"></p>
+			</div>
+		</div>
+
+	</main>
+	<div th:replace=" /pages/booklist :: rentalmodal"></div>
+</body>
+</html>
