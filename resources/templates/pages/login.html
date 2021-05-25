@@ -19,10 +19,11 @@
     <img src="/images/elbook_logo.jpeg">
   </header>
 
-  <form class="contents-form"  th:action="@{/sign_in}" method="POST">
+  <form class="contents-form"  th:action="@{/mypage}" method="POST">
     <div class="item">
       <label class="item-label">ユーザー名またはメールアドレス</label><br>
       <input type="text" name="username" autocomplete="name" class="form-input">
+      <div th:unless="${session == null}" th:text="${session.errReason}" style="color: #ffffff">Hoge</div>
     </div>
     <div class="item">
       <label class="item-label">パスワード</label><br>

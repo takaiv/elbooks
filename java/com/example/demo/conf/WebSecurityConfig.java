@@ -48,10 +48,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.formLogin()
 				.loginPage("/pages/login") // ログインのビュー
-				.loginProcessingUrl("/sign_in") //AuthenticationConfigurationが暗黙のうちに呼ばれて認証処理が実行される
+				.loginProcessingUrl("/mypage") //AuthenticationConfigurationが暗黙のうちに呼ばれて認証処理が実行される
 				.usernameParameter("username")
 				.passwordParameter("pass")
-				.successForwardUrl("/mypage")
+				.defaultSuccessUrl("/mypage")//何も入力がない場合のみ/mypageに飛ぶ//リダイレクトできる
+//				.successForwardUrl("/mypage")//ログイン後必ず/mypageに飛ぶ//リダイレクトしようとするとフォーム再送信になりエラーが出る
 				.failureUrl("/pages/login?error")
 				.permitAll()
 				.and()
