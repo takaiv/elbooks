@@ -5,6 +5,8 @@
 
 package com.example.demo.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import com.example.demo.service.LoginUserDao;
 //mypageにアクセス
 public class LoginController {
 
+	private HttpSession httpSession;
 	@Autowired
 	LoginUserDao loginUserDao;
 
@@ -52,8 +55,10 @@ public class LoginController {
 	//ログインページにアクセス
 	@GetMapping("/login")
 	public String Login() {
+		
 		return "pages/login.html";
 	}
+	
 	/**
 	 * /loginページ
 	 * */

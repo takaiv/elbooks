@@ -2,40 +2,51 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>ログイン</title>
-  <link rel="stylesheet" type="text/css" href="/css/login.css">
-  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-    crossorigin="anonymous">
-  </script>
+<title>ログイン</title>
+<link rel="stylesheet" type="text/css" href="/css/login.css">
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+	crossorigin="anonymous">
+	
+</script>
 </head>
 
 <body>
 
-  <header>
-    <img src="/images/elbook_logo.jpeg">
-  </header>
+	<header>
+		<img src="/images/elbook_logo.jpeg">
+	</header>
 
-  <form class="contents-form"  th:action="@{/mypage}" method="POST">
-    <div class="item">
-      <label class="item-label">ユーザー名またはメールアドレス</label><br>
-      <input type="text" name="username" autocomplete="name" class="form-input">
-      <div th:unless="${session == null}" th:text="${session.errReason}" style="color: #ffffff">Hoge</div>
-    </div>
-    <div class="item">
-      <label class="item-label">パスワード</label><br>
-      <input type="password" name="pass" autocomplete="current-password" class="form-input">
-    </div>
-    <div class="form-checkbox">
-      <input type="checkbox">ログインを保存する
-    </div>
-    <div class="form-button">
-      <input class="form-button-login" type="submit" value="ログイン" >
-    </div>
-  </form>
+	<form class="contents-form" th:action="@{/mypage}" method="POST">
+		<span th:if="${param.error}" style="color: red;"
+			th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.class}"></span>
+		<div class="item">
+			<label class="item-label">ユーザー名またはメールアドレス</label><br> <input
+				type="text" name="username" autocomplete="name" class="form-input">
+			<div th:unless="${session == null}"
+				th:text="${session.mySessionAttribute}" style="color: #ffffff">Hoge</div>
+		</div>
+		<div class="item">
+			<label class="item-label">パスワード</label><br> <input
+				type="password" name="pass" autocomplete="current-password"
+				class="form-input">
+		</div>
+		<div class="form-checkbox">
+			<input type="checkbox">ログインを保存する
+		</div>
+		<div class="form-button">
+			<input class="form-button-login" type="submit" value="ログイン">
+		</div>
+	</form>
+
 </body>
 
 </html>

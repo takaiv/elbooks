@@ -52,8 +52,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.usernameParameter("username")
 				.passwordParameter("pass")
 				.defaultSuccessUrl("/mypage")//何も入力がない場合のみ/mypageに飛ぶ//リダイレクトできる
-//				.successForwardUrl("/mypage")//ログイン後必ず/mypageに飛ぶ//リダイレクトしようとするとフォーム再送信になりエラーが出る
+				.successForwardUrl("/mypage")//ログイン後必ず/mypageに飛ぶ//リダイレクトしようとするとフォーム再送信になりエラーが出る
 				.failureUrl("/pages/login?error")
+//				.failureHandler((req, res, exp) -> {
+//                    res.sendRedirect("/pages/login?error=true&username=" + req.getParameter("username"));
+//                })
 				.permitAll()
 				.and()
 				.logout()

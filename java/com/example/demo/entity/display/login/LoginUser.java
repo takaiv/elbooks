@@ -3,23 +3,26 @@ package com.example.demo.entity.display.login;
 import java.io.Serializable;
 import java.sql.Date;
 
-import lombok.Data;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
+import lombok.Data;
 
 @Data
 public class LoginUser  implements Serializable{
 
 
-	//    @NonNull
+	@NotEmpty(message = "{id}")
 	private int user_id;
 
-	//	@NonNull
+
+	@NotEmpty(message = "{name}")
+	@Size(max=64)
 	private String user_name;
 
-	//	@NonNull
 	private String admin_mail;
 
-	//	@NonNull
+	@NotEmpty(message = "{pass}")
 	private String pass;
 
 	//	@NonNull
