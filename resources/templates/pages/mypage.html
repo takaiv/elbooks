@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head
-	th:replace="/pages/header :: meta_header('Document',~{::link},~{::script})">
+	th:replace="/pages/header :: meta_header('mypage',~{::link},~{::script})">
 <link rel="stylesheet" type="text/css" href="/css/bookHistory.css">
 <link th:href="@{/css/mypage.css}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="../css/book.css">
@@ -52,6 +52,7 @@
 				<p hidden th:text="*{book.page}" > </p>
 				<p hidden th:text="*{book.book_id}" > </p>
 				<p hidden th:text="*{book.max_num}"> </p>
+				<p hidden th:text="*{book.loan_day}"> </p>
 				
 			</div>
 		</div>

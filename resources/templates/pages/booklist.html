@@ -50,6 +50,12 @@
 											$('#book_maxnum').val(
 													parseInt(p_book_maxnum));
 
+											/* レンタル日の取得とモーダルのformボタンの値書き換え */
+											let p_book_loan_day = $(this)
+													.children('p')[5].innerText;
+											$('#book_loan_day').val(
+													p_book_loan_day);
+
 											/* 残り冊数の取得とモーダルのformボタンの値書き換え */
 											$('#rental_maxnum_2').val(
 													p_book_maxnum);
@@ -62,27 +68,38 @@
 											/* モーダルの編集用タグの値書き換え */
 											let element_2 = document
 													.getElementById('edit_link');
-											element_2.href = `/elbooks/book/${p_book_id}`;
+											element_2.href = `/books/ed/${p_book_id}`;
 
 											/* レンタルformのアクション値書き換え */
-											document
-													.getElementById('rental_button_form').action = `/elbooks/book/${p_book_id}`;
-													
-													/* 返却formのアクション値書き換え */
-													document
-															.getElementById('return_button_form').action = `/elbooks/returnbook/${p_book_id}`;
-													
+											let rental_button_form = document
+													.getElementById('rental_button_form');
+											rental_button_form.action = `/elbooks/book/${p_book_id}`;
+
+											/* 返却formのアクション値書き換え */
+											let return_button_form = document
+													.getElementById('return_button_form')
+											return_button_form.action = `/elbooks/returnbook/${p_book_id}`;
+
 											/* 残り冊数の判定とボタン機能on/off */
-											if (p_book_maxnum > 0) {
+											if (p_book_maxnum <= 0) {
+												/* visibilityプロパティの書き換え */
+												rental_button_form.style.visibility = "hidden";
+											} else if (p_book_loan_day !== "") {
+												/* visibilityプロパティの書き換え */
+												rental_button_form.style.visibility = "hidden";
+											} else if (p_book_maxnum >= 0) {
+
 												$('#rental_maxnum_1').val(
 														p_book_maxnum);
 												/* visibilityプロパティの書き換え */
-												document
-														.getElementById('rental_button_form').style.visibility = "visible";
-											} else {
+												rental_button_form.style.visibility = "visible";
+											}
+
+											if (p_book_loan_day !== "") {
 												/* visibilityプロパティの書き換え */
-												document
-														.getElementById('rental_button_form').style.visibility = "hidden";
+												return_button_form.style.visibility = "visible";
+											} else {
+												return_button_form.style.visibility = "hidden";
 											}
 
 											$('#rentalModal').modal('show');
@@ -159,7 +176,7 @@
 							<input type="text" id="book_maxnum"> -->
 							<!-- レンタルボタン -->
 							<form th:action="@{/elbooks/book/}" th:method="post"
-								id="rental_button_form" >
+								id="rental_button_form">
 								<input type="hidden" id="rental_maxnum_1" name="rental_maxnum">
 								<input type="hidden" id="rentalBookId" name="rentalBookId">
 								<!-- タスク：disabledかdisplayかvisibilityで表示非表示切り替えor活性/非活性切り替えできるようにする -->
@@ -172,7 +189,7 @@
 							<!-- 返却ボタン -->
 							<!-- th:valueが原因で表示されなかった -->
 							<form th:action="@{/elbooks/book}" th:method="post"
-								th:object="${lendingBook}" id ="return_button_form">
+								th:object="${lendingBook}" id="return_button_form">
 								<input type="hidden" id="rental_maxnum_2" name="max_num">
 								<!-- タスク1：disabledかdisplayかvisibilityで表示非表示切り替えor活性/非活性切り替えできるようにする -->
 								<!-- タスク2：借りている場合のみ返却できるロジック(select文の編集、htmlの書き換え、javascriptの判定文)を書く -->

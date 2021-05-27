@@ -1,3 +1,5 @@
+//製作：高安さん
+//パス：直接
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +25,16 @@ public class BooklistController {
 //	localhost:8080/mypage
 	@RequestMapping("/mypage")
 	public String mypage(@AuthenticationPrincipal LoginUserDetailsImpl user, Model model) {
-		model.addAttribute("books", booklistService.findAll());
+		
+		
 		LoginUser loginUser=user.getLoginUser();
+		int user_id = loginUser.getUser_id();
 
 		model.addAttribute("loginUser", loginUser);
 
-		System.out.println(user);
-
 		System.out.println(loginUser);
+		
+		model.addAttribute("books", booklistService.findAll_MypageBooks(user_id));
 		return "/pages/mypage";
 	}
 

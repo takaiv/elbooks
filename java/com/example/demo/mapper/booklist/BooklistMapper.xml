@@ -4,26 +4,42 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.example.demo.mapper.booklist.BooklistMapper">
+<mapper
+	namespace="com.example.demo.mapper.booklist.BooklistMapper">
 
-	<resultMap id="Base_Result_Map" type="com.example.demo.entity.common.Book">
-		<id column="id" property="id" jdbcType="INTEGER"/>
-		<result column="title" property="title" jdbcType="VARCHAR"/>
+	<resultMap id="Base_Result_Map"
+		type="com.example.demo.entity.common.Book">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
 	</resultMap>
 
-    <!-- 書籍一覧表示 -->
-	<select id="findAll" resultMap="Base_Result_Map">
+	<select id="findAll_MypageBooks"
+		resultType="com.example.demo.entity.display.MypageBook.MypageBook">
+		select
+		X.book_id,X.title,X.author,X.category_id,X.max_num,X.entry_day,X.updatetime,X.isdeleted,X.page,Y.loan_day,Y.plan_day
+		from m_book as X left outer join (select * from t_loan where user_id=#{user_id}) as Y
+		on X.book_id=Y.book_id where X.isdeleted=0;
+	</select>
+
+
+	<!-- 書籍一覧表示 -->
+	<select id="findAll"
+		resultType="com.example.demo.entity.common.Book">
 		select * from m_book
 	</select>
 
 	<!-- 書籍名で検索 -->
-	<select id="findtitle" resultType="com.example.demo.entity.common.Book">
-		select * from m_book where title like CONCAT('%', #{title}, '%')
+	<select id="findtitle"
+		resultType="com.example.demo.entity.common.Book">
+		select * from m_book where title like CONCAT('%', #{title},
+		'%')
 	</select>
 
 	<!-- 著者名で検索 -->
-	<select id="findauthor" resultType="com.example.demo.entity.common.Book">
-		select * from m_book where author like CONCAT('%', #{title}, '%')
+	<select id="findauthor"
+		resultType="com.example.demo.entity.common.Book">
+		select * from m_book where author like CONCAT('%',
+		#{title}, '%')
 	</select>
 
 </mapper>

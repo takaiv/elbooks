@@ -2,7 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+<!-- metaデータ -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- /metaデータ -->
+
+<!-- title -->
 <title>ログイン</title>
+<!-- /title -->
+
+<!-- link -->
 <link rel="stylesheet" type="text/css" href="/css/login.css">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
 	rel="stylesheet">
@@ -11,13 +21,26 @@
 	rel="stylesheet"
 	integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
 	crossorigin="anonymous">
+<!-- /link -->
+
+<!-- script -->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-	crossorigin="anonymous">
-	
-</script>
+	crossorigin="anonymous"></script>
+<!-- /script -->
+
+<!-- モーダルで必要なパーツ -->
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/userlist.css">
+<!-- モーダルで必要なパーツ -->
+
 </head>
+
 
 <body>
 
@@ -25,28 +48,86 @@
 		<img src="/images/elbook_logo.jpeg">
 	</header>
 
-	<form class="contents-form" th:action="@{/mypage}" method="POST">
-		<span th:if="${param.error}" style="color: red;"
-			th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.class}"></span>
+	<form class="contents-form" th:action="@{/sign_in}" method="POST">
+		<span th:if="${session['Error_message']} != null" style="color: red;"
+			th:text=" ${session['Error_message']}"></span> <span
+			th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+			style="color: red;"
+			th:text=" ${session[SPRING_SECURITY_LAST_EXCEPTION].message}"></span>
+		<span th:if="${param.logout}" style="color: red;" th:text="ログアウトしました。"></span>
+		<!-- <ul th:if="${param.error}" style="color: red;">
+			<li th:each="error : ${#fields.detailedErrors()}"><span
+				th:text="${error.message}">Error message</span></li>
+		</ul> -->
 		<div class="item">
 			<label class="item-label">ユーザー名またはメールアドレス</label><br> <input
-				type="text" name="username" autocomplete="name" class="form-input">
-			<div th:unless="${session == null}"
-				th:text="${session.mySessionAttribute}" style="color: #ffffff">Hoge</div>
+				type="text" name="username" autocomplete="name" class="form-input"
+				th:value="${loginForm.username != null } ? ${loginForm.username} : ''"
+				placeholder="ユーザー名" required autoforcus>
+			<p class="error">
+				<span class="invalid">(!) 名前を入力して下さい</span>
+			</p>
 		</div>
 		<div class="item">
 			<label class="item-label">パスワード</label><br> <input
 				type="password" name="pass" autocomplete="current-password"
-				class="form-input">
+				class="form-input"
+				th:value="${loginForm.pass != null } ? ${loginForm.pass}: ''"
+				placeholder="パスワード" pattern="^[0-9A-Za-z]+$" required />
+			<p class="error">
+				<span class="invalid">(!) パスワードを入力して下さい</span>
+			</p>
 		</div>
 		<div class="form-checkbox">
 			<input type="checkbox">ログインを保存する
 		</div>
+		<button type="button" class="userEntryModalButton" data-toggle="modal"
+		data-target="#userEntryModal">新規登録</button>
 		<div class="form-button">
 			<input class="form-button-login" type="submit" value="ログイン">
 		</div>
 	</form>
 
+
+	
+
+	<!-- ユーザー登録モーダル -->
+	<div id="userEntryModal" class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="Modal" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="Form">
+						<h2 class="title">
+							<i class="far fa-envelope"></i> ユーザー新規登録
+						</h2>
+					</div>
+					<form th:action="@{/user/add}" th:object="${user}" method="post">
+						<div class="Form-Item">
+							<div class="inline-block">
+								<label>ユーザー名<span class="">※必須</span></label> <input
+									class="Form-input-Item" type="text" th:field="*{user_name}"
+									required>
+							</div>
+							<div class="inline-block">
+								<label>メールアドレス<span class="">※必須</span></label> <input
+									class="Form-input-Item" name="mail" type="email"
+									th:field="*{mail}" required>
+							</div>
+							<div class="inline-block">
+								<label>パスワード<span class="">※必須</span></label> <input
+									class="Form-input-ItemEntry" type="password" th:field="*{pass}"
+									required>
+							</div>
+							<div class="inline-block button">
+								<button class="Entry-Button">送信する</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

@@ -1,3 +1,5 @@
+//担当者：新井さん
+//パス：/elbooks
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;

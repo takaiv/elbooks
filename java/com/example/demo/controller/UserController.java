@@ -1,3 +1,8 @@
+//作成担当：山内さん
+//作成日：
+//更新日：
+//内容：userのコントローラー
+//パス：/user
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +41,7 @@ public class UserController {
 	@PostMapping("/add")
 	public String userAdd(@ModelAttribute User user) {
 		insertMapper.insertUser(user);
-		return "redirect:/user/list";
+		return "forward:/pages/login";
 	}
 
 	@PostMapping("/edit")

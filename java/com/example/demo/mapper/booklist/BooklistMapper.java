@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.entity.common.Book;
+import com.example.demo.entity.display.MypageBook.MypageBook;
 
 
 
@@ -21,5 +22,7 @@ public interface BooklistMapper {
 
 //	著者名で検索
 	List<Book> findauthor(String title);
+
+	List<MypageBook> findAll_MypageBooks(int user_id);
 
 }

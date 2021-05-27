@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.common.Book;
+import com.example.demo.entity.display.MypageBook.MypageBook;
 import com.example.demo.mapper.booklist.BooklistMapper;
 
 
@@ -32,6 +33,11 @@ public class BooklistService {
 	public List<Book> findauthor(String title) {
 
 		return booklistMapper.findauthor(title);
+	}
+
+	public List<MypageBook> findAll_MypageBooks(int user_id) {
+		
+		return booklistMapper.findAll_MypageBooks(user_id);
 	}
 
 }

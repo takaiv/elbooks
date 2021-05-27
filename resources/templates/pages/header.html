@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="../css/header.css">
 
 <!-- (3)タイトルのフォーマット -->
-<title th:text="${title}+' | sample app'">各ページタイトル | sample app</title>
+<title th:text="${title}+' | el.Books'">各ページタイトル | sample app</title>
 <title>ヘッダー画面</title>
 
 <!-- (4)各View固有で読み込むもの -->
@@ -23,8 +23,9 @@
 	<header th:fragment="header">
 		<img src="../images/elbook_logo.jpeg">
 		<ul>
-		<li th:text="ようこそ：+${#authentication.principal.LoginUser.user_name}+さん"></li>
-		<li th:text="権限：+${#authentication.principal.authorities}"></li>
+			<li
+				th:text="ようこそ：+${#authentication.principal.LoginUser.user_name}+さん"></li>
+			<li th:text="権限：+${#authentication.principal.authorities}"></li>
 		</ul>
 		<nav class="header-nav">
 			<ul class="menu">

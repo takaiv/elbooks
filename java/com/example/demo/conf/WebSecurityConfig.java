@@ -41,19 +41,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.authorizeRequests()
-				.antMatchers("/index").permitAll() // 認証なしでアクセス可能なパス
+				.antMatchers("/user/add").permitAll()
+				.antMatchers("/index").permitAll()// 認証なしでアクセス可能なパス
+				.antMatchers("/pages/login_fail").permitAll()// 認証なしでアクセス可能なパス
 				//.antMatchers("/css/**", "/images/**", "/js/**", "/scss/**").permitAll() // 
 				//.antMatchers("/admin/**").hasRole("ADMIN")// admin権限を持ったアカウントのみがアクセス可能(階層はまだ無し)
 				.anyRequest().authenticated()//それ以外は認証が必要
 				.and()
 				.formLogin()
 				.loginPage("/pages/login") // ログインのビュー
-				.loginProcessingUrl("/mypage") //AuthenticationConfigurationが暗黙のうちに呼ばれて認証処理が実行される
+				.loginProcessingUrl("/sign_in") //AuthenticationConfigurationが暗黙のうちに呼ばれて認証処理が実行される
 				.usernameParameter("username")
 				.passwordParameter("pass")
 				.defaultSuccessUrl("/mypage")//何も入力がない場合のみ/mypageに飛ぶ//リダイレクトできる
-				.successForwardUrl("/mypage")//ログイン後必ず/mypageに飛ぶ//リダイレクトしようとするとフォーム再送信になりエラーが出る
-				.failureUrl("/pages/login?error")
+//				.successForwardUrl("/mypage")//ログイン後必ず/mypageに飛ぶ//リダイレクトしようとするとフォーム再送信になりエラーが出る
+//				.failureUrl("/pages/login?error")
+				.failureForwardUrl("/pages/login?error")
 //				.failureHandler((req, res, exp) -> {
 //                    res.sendRedirect("/pages/login?error=true&username=" + req.getParameter("username"));
 //                })
@@ -63,7 +66,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/pages/login?logout")
 				.permitAll()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//				.and()
+//				.rememberMe()
+				;
 	}
 
 	//AuthenticationManagerBuildeの設定(AuthenticationConfigurationのメソッドのオーバーライド？)
