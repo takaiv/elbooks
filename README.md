@@ -1,5 +1,39 @@
 # elbooks_db testdata
 
+t_historyのプライマーキーを追加しました。
+以下のコードで交換してください。
+drop table t_history;
+
+CREATE TABLE t_history( book_id int(4) NOT NULL, user_id int(4) NOT NULL,
+
+loan_day datetime,
+return_day datetime DEFAULT CURRENT_TIMESTAMP,
+
+primary key(book_id,user_id,loan_day),
+foreign key fk_book_id(book_id) REFERENCES m_book(book_id),
+foreign key fk_user_id(user_id) REFERENCES m_user(user_id)
+);
+
+
+gitでpushできないときは以下を試してください。大平
+<ローカルリポジトリ>/.git/configをテキストエディタで開きます。
+
+	略
+	...
+	[remote "origin"]
+	        url = https://github.com/<Organization名>/<リポジトリ名>.git
+	...
+	略
+上記のURLのgithub.comを部分を、<ユーザー名>@github.comに書き換えます。
+
+
+	略
+	...
+	[remote "origin"]
+	        url = https://<自分のユーザー名>@github.com/<Organization名>/<リポジトリ名>.git
+	...
+	略
+終わり
 
 USE elbooks;
 
