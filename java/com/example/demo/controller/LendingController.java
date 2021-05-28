@@ -91,6 +91,7 @@ public class LendingController {
 		//book_idをセット
 		lendingBook.setBook_id(returnBookId);
 		
+		
 		//user_idをセット
 		lendingBook.setUser_id(user.getLoginUser().getUser_id());
 		
