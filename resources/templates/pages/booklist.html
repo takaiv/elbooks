@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript"
@@ -68,7 +68,11 @@
 											/* モーダルの編集用タグの値書き換え */
 											let element_2 = document
 													.getElementById('edit_link');
-											element_2.href = `/books/ed/${p_book_id}`;
+											
+											if(element_2 !=null){
+												element_2.href = `/books/ed/${p_book_id}`;
+											}
+											
 
 											/* レンタルformのアクション値書き換え */
 											let rental_button_form = document
@@ -161,19 +165,8 @@
 								<p class="inventory">在庫数1冊</p>
 							</div>
 
-							<a href="#" class="edit" id="edit_link">編集する</a>
-							<!-- <p class="bookTitle"></p>
-
-							<input type="text" id="book_title" class="bookTitle">
-							<p class="author"></p>
-							<input type="text" id="book_author" class="author">
-
-							<p class="bookPage"></p>
-							<input type="text" id="book_page">
-							<p class="book_id"></p>
-							<input type="text" id="book_id">
-							<p class="description"></p>
-							<input type="text" id="book_maxnum"> -->
+							<a href="#" class="edit" id="edit_link" sec:authorize="hasRole('ADMIN')">編集する</a>
+							
 							<!-- レンタルボタン -->
 							<form th:action="@{/elbooks/book/}" th:method="post"
 								id="rental_button_form">

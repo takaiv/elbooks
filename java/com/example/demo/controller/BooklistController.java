@@ -23,7 +23,7 @@ public class BooklistController {
 	BooklistService booklistService;
 
 //	localhost:8080/mypage
-	@RequestMapping("/mypage")
+	@RequestMapping(value = {"/", "/mypage"})
 	public String mypage(@AuthenticationPrincipal LoginUserDetailsImpl user, Model model) {
 		
 		
