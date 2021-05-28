@@ -1,8 +1,6 @@
 package com.example.demo.mapper.book_a;
 
-
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,25 +10,55 @@ import com.example.demo.entity.display.lendingbook.LendingBook;
 @Mapper
 public interface BookMapper_a {
 
-	// 書籍表示
-		List<Book> select();
+	/**
+	 * select
+	 * */
+	// 書籍一覧表示検索
+	List<Book> selectAllBook();
+	
+	// 借りている書籍一覧検索
+	List<LendingBook> returnSelect();
 
-		// 借りている書籍一覧
-		List<LendingBook> returnSelect();
+	//レンタルしたい書籍検索
+	LendingBook selectOneBook(Integer book_id);
 
-		// 貸出 t_loanに書籍を登録
-		public void insert(LendingBook lendingBook);
+	//レンタルしている書籍検索
+	LendingBook selectOneLendingBook(Integer returnBookId, int user_id);
+	/**
+	 * /select
+	 * */
+	
+	
+	/**
+	 * insert
+	 * */
+	// 貸出 t_loanに書籍を登録
+	public void insert(LendingBook lendingBook);
 
-		public void update(Book book);
+	// 返却 t_Historyにt_loanの書籍を登録
+	public void returnInsert(LendingBook lendingBook);
 
-		List<Book> bookSelect(int book_id);
+	/**
+	 * /insert
+	 * */
 
-		// 返却 t_Historyにt_loanの書籍を登録
-		public void returnInsert(int id);
+	
+	/**
+	 * update
+	 * */
+	public void update(Book book);
 
-		public void returnDelete(int book_id);
+	/**
+	 * /update
+	 * */
 
-		Optional<LendingBook> maxnumSelect(LendingBook lendingBook);
+	/**
+	 * delete
+	 * */
+	//delete
+	public void returnDelete(LendingBook lendingBook);
+	/**
+	 * /delete
+	 * */
 
-		LendingBook selectLengingBookOne(int book_id);
-	}
+}

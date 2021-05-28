@@ -25,12 +25,12 @@ public class LendingService {
 		}
 
 		// 返却
-		public void insertReturnBook(int id) {
-			bookMapper.returnInsert(id);
+		public void insertReturnBook(LendingBook lendingBook) {
+			bookMapper.returnInsert(lendingBook);
 		}
 
-		public void returndelete(int book_id) {
-			bookMapper.returnDelete(book_id);
+		public void returndelete(LendingBook lendingBook) {
+			bookMapper.returnDelete(lendingBook);
 		}
 
 

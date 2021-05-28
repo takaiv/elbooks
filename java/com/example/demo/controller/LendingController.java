@@ -3,7 +3,6 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,11 +36,19 @@ public class LendingController {
 	// 貸出画面
 	@GetMapping("/booklist")
 	public String booklist(Model model) {
-		List<Book> list = bookMapper.select();
+		List<Book> list = bookMapper.selectAllBook();
 		model.addAttribute("Book", list);
 		model.addAttribute("lendingBook", new LendingBook());
 		return "/pages/booklist";
 	}
+	
+	// 返却画面表示
+		@GetMapping("/returnlist")
+		public String returnlist(Model model, @ModelAttribute History history) {
+			List<LendingBook> list = bookMapper.returnSelect();
+			model.addAttribute("LendingBook", list);
+			return "/pages/returnlist";
+		}
 
 	/**
 	 * 借りる機能
@@ -52,7 +59,7 @@ public class LendingController {
 	@PostMapping("/book/{book_id}")
 	public String insertBook(@AuthenticationPrincipal LoginUserDetailsImpl user,@ModelAttribute LendingBook lendingBook,@ModelAttribute Book book,@PathVariable("book_id") Integer book_id) {
 		//user_idをログインユーザーから取得してセット
-		lendingBook=bookMapper.selectLengingBookOne(book_id);
+		lendingBook=bookMapper.selectOneBook(book_id);
 		lendingBook.setUser_id(user.getLoginUser().getUser_id());
 		
 		System.out.println(lendingBook.getUser_id());
@@ -73,13 +80,7 @@ public class LendingController {
 	 * /借りる機能
 	 */
 
-	// 返却
-	@GetMapping("/returnlist")
-	public String returnlist(Model model, @ModelAttribute History history) {
-		List<LendingBook> list = bookMapper.returnSelect();
-		model.addAttribute("LendingBook", list);
-		return "/pages/returnlist";
-	}
+	
 
 	/**
 	 * 機能：返却機能
@@ -87,17 +88,15 @@ public class LendingController {
 	 * 最終編集者：オオヒラ
 	 * */
 	@PostMapping("/returnbook/{returnBookId}")
-	public String returnInsert(@PathVariable("returnBookId") Integer returnBookId,@ModelAttribute LendingBook lendingBook,@AuthenticationPrincipal LoginUserDetailsImpl user) {
-		//book_idをセット
-		lendingBook.setBook_id(returnBookId);
-		
-		
+	public String returnInsert(@PathVariable("returnBookId") Integer returnBookId,@AuthenticationPrincipal LoginUserDetailsImpl user) {
 		//user_idをセット
-		lendingBook.setUser_id(user.getLoginUser().getUser_id());
+		int user_id=user.getLoginUser().getUser_id();
+		//book_idをセット
+		LendingBook lendingBook=bookMapper.selectOneLendingBook(returnBookId,user_id);
 		
-		//現在の冊数を取得(適切なクラスに変えてください)【】
-		Optional<LendingBook> optional = bookMapper.maxnumSelect(lendingBook);
-		lendingBook = optional.get();
+		//現在の冊数を取得
+		System.out.println(lendingBook.getMax_num());
+		
 		
 		//冊数+1処理
 		int max_num = lendingBook.getMax_num() +1;
@@ -106,17 +105,19 @@ public class LendingController {
 		//冊数更新処理
 		lendingService.updateMax_num(lendingBook);
 		
+		System.out.println(lendingBook.getMax_num());
 		System.out.println(lendingBook);
 		
 		//履歴の挿入処理
-		lendingService.insertReturnBook(returnBookId);
+		lendingService.insertReturnBook(lendingBook);
 		
 		//レンタルテーブルから削除処理
-		lendingService.returndelete(returnBookId);
+		lendingService.returndelete(lendingBook);
 		
 		//メインメニューにリダイレクト
 		return "redirect:/mypage";
 	}
+
 	/**
 	 * /機能：返却機能
 	 * */

@@ -2,35 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.book_a.BookMapper_a">
-
-	<select id="select"
+	<!-- select -->
+	<select id="selectAllBook"
 		resultType="com.example.demo.entity.common.Book">
 		select * from m_book;
 	</select>
 
-<select id="selectLengingBookOne"
+	<select id="selectOneBook"
 		resultType="com.example.demo.entity.display.lendingbook.LendingBook">
-		select * from m_book where book_id=#{book_id};
+		select * from m_book where book_id = #{book_id};
 	</select>
 
-	<insert id="insert"
-		parameterType="com.example.demo.entity.display.lendingbook.LendingBook">
-		INSERT INTO t_loan (book_id, user_id, plan_day)
-		VALUES (#{book_id}, #{user_id}, DATE_ADD(CURRENT_TIMESTAMP(),interval 14 day))
-	</insert>
-
-<select id="maxnumSelect" resultType="com.example.demo.entity.display.lendingbook.LendingBook">
-  	SELECT max_num FROM m_book WHERE book_id = #{book_id};
-  </select>
-
-	<update id="update"
-		parameterType="com.example.demo.entity.common.Book">
-		UPDATE m_book SET max_num = #{max_num} WHERE book_id = #{book_id};
-		</update>
-
-	<select id="bookSelect"
-		resultType="com.example.demo.entity.common.Book">
-		select * from m_book where book_id = #{book_id};
+	<select id="selectOneLendingBook"
+		resultType="com.example.demo.entity.display.lendingbook.LendingBook">
+		select
+		X.book_id,X.user_id,loan_day,X.plan_day,Y.title,Y.author,Y.category_id,Y.max_num,Y.entry_day,Y.updatetime,Y.page
+		from t_loan as X join m_book as Y on X.book_id = Y.book_id where
+		X.book_id=#{returnBookId} and X.user_id=#{user_id};
 	</select>
 
 	<!-- 貸出中書籍リスト -->
@@ -47,18 +35,40 @@
 		m_book.category_id
 		and t_loan.user_id = #{user_id};
 	</select>
+	<!-- /select -->
+
+	<!-- insert -->
+	<insert id="insert"
+		parameterType="com.example.demo.entity.display.lendingbook.LendingBook">
+		INSERT INTO t_loan (book_id, user_id, plan_day)
+		VALUES
+		(#{book_id}, #{user_id}, DATE_ADD(CURRENT_TIMESTAMP(),interval 14
+		day))
+	</insert>
 
 	<!-- t_historyに登録 書籍返却したよ〜履歴 -->
 	<insert id="returnInsert"
-		parameterType="com.example.demo.entity.common.History">
+		parameterType="com.example.demo.entity.display.lendingbook.LendingBook">
 		INSERT INTO t_history (book_id, user_id, loan_day)
-		VALUES (#{book_id}, #{user_id}, "2021-04-30");
+		VALUES (#{book_id}, #{user_id}, #{loan_day});
 	</insert>
+	<!-- /insert -->
 
+	<!-- update -->
+	<update id="update"
+		parameterType="com.example.demo.entity.common.Book">
+		UPDATE m_book SET max_num = #{max_num} WHERE book_id =
+		#{book_id};
+	</update>
+	<!-- /update -->
+
+	<!-- delete -->
 	<!-- t_loanから返却した書籍のデータを削除 -->
 	<delete id="returnDelete"
 		parameterType="com.example.demo.entity.display.lendingbook.LendingBook">
-		DELETE FROM t_loan WHERE t_loan.book_id = #{book_id} AND t_loan.user_id = #{user_id} ;
+		DELETE FROM t_loan WHERE book_id = #{book_id} AND
+		user_id = #{user_id} ;
 	</delete>
-
+	<!-- /delete -->
+	
 </mapper>
