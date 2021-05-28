@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,6 @@ public class BooklistController {
 	@RequestMapping(value = {"/", "/mypage"})
 	public String mypage(@AuthenticationPrincipal LoginUserDetailsImpl user, Model model) {
 		
-		
 		LoginUser loginUser=user.getLoginUser();
 		int user_id = loginUser.getUser_id();
 
@@ -38,25 +36,24 @@ public class BooklistController {
 		return "/pages/mypage";
 	}
 
+	//書籍タイトル・著者検索
 	@PostMapping("/myseach")
 	public String findOne(@ModelAttribute Book book, Model model) {
 
-		String title = book.getTitle();
+		String keyword = book.getTitle();
+		model.addAttribute("seach", booklistService.findtitle(keyword));
 
-//		タイトル検索
-		System.out.println(title);
-		model.addAttribute("seach", booklistService.findtitle(title));
-
-		model.addAttribute("seachs", booklistService.findauthor(title));
+		model.addAttribute("seachs", booklistService.findauthor(keyword));
 
 		return "/pages/mypage";
 	}
 	
-	@GetMapping("/header")
-	public String tmp(Model model) {
-
-		
-		return "/pages/header";
-	}
+	//headerの確認：大平
+//	@GetMapping("/header")
+//	public String tmp(Model model) {
+//
+//		
+//		return "/pages/header";
+//	}
 
 }

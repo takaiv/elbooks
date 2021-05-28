@@ -24,15 +24,15 @@ public class BooklistService {
 	}
 
 //	書籍名で検索
-	public List<Book> findtitle(String title) {
+	public List<MypageBook> findtitle(String keyword) {
 
-		return booklistMapper.findtitle(title);
+		return booklistMapper.findtitle(keyword);
 	}
 
 //	著者名で検索
-	public List<Book> findauthor(String title) {
+	public List<MypageBook> findauthor(String keyword) {
 
-		return booklistMapper.findauthor(title);
+		return booklistMapper.findauthor(keyword);
 	}
 
 	public List<MypageBook> findAll_MypageBooks(int user_id) {

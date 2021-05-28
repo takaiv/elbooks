@@ -60,6 +60,7 @@ public class BookController {
 	@GetMapping("/{bookId}/update")
 	public String update(@ModelAttribute Book book) {
 		bookService.update(book);
+		System.out.println(book);
 			return "redirect:/mypage";
 	}
 

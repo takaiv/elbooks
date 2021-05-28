@@ -18,10 +18,10 @@ public interface BooklistMapper {
 	List<Book> findAll();
 
 //	書籍名で検索
-	List<Book> findtitle(String title);
+	List<MypageBook> findtitle(String keyword);
 
 //	著者名で検索
-	List<Book> findauthor(String title);
+	List<MypageBook> findauthor(String keyword);
 
 	List<MypageBook> findAll_MypageBooks(int user_id);
 

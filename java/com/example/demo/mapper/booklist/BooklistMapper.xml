@@ -17,7 +17,8 @@
 		resultType="com.example.demo.entity.display.MypageBook.MypageBook">
 		select
 		X.book_id,X.title,X.author,X.category_id,X.max_num,X.entry_day,X.updatetime,X.isdeleted,X.page,Y.loan_day,Y.plan_day
-		from m_book as X left outer join (select * from t_loan where user_id=#{user_id}) as Y
+		from m_book as X left outer join (select * from t_loan where
+		user_id=#{user_id}) as Y
 		on X.book_id=Y.book_id where X.isdeleted=0;
 	</select>
 
@@ -30,16 +31,31 @@
 
 	<!-- 書籍名で検索 -->
 	<select id="findtitle"
-		resultType="com.example.demo.entity.common.Book">
-		select * from m_book where title like CONCAT('%', #{title},
-		'%')
+		resultType="com.example.demo.entity.display.MypageBook.MypageBook">
+		select
+		X.book_id,X.title,X.author,X.category_id,X.max_num,X.entry_day,X.updatetime,X.isdeleted,X.page,Y.loan_day,Y.plan_day
+		from m_book as X
+		left outer join (select * from t_loan where
+		user_id=#{user_id}) as Y on
+		X.book_id=Y.book_id
+		where X.isdeleted=0
+		and
+		title like CONCAT('%', #{keyword},'%');
+
 	</select>
 
 	<!-- 著者名で検索 -->
 	<select id="findauthor"
-		resultType="com.example.demo.entity.common.Book">
-		select * from m_book where author like CONCAT('%',
-		#{title}, '%')
+		resultType="com.example.demo.entity.display.MypageBook.MypageBook">
+		select
+		X.book_id,X.title,X.author,X.category_id,X.max_num,X.entry_day,X.updatetime,X.isdeleted,X.page,Y.loan_day,Y.plan_day
+		from m_book as X
+		left outer join (select * from t_loan where
+		user_id=#{user_id}) as Y
+		on
+		X.book_id=Y.book_id where X.isdeleted=0 and
+		author like CONCAT('%',
+		#{keyword},'%');
 	</select>
 
 </mapper>

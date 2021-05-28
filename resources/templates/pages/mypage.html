@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head
 	th:replace="/pages/header :: meta_header('mypage',~{::link},~{::script})">
@@ -43,29 +44,23 @@
 		<!-- 	本一覧表示 -->
 		<div class="grid">
 			<!-- 左のbookがループの指定/右がコントローラー -->
-			<div class="item rentalTable"  th:each="book:${books}">
-				<img th:src="@{images/{bookId}.jpg(bookId=*{book.book_id})}">
-				<p th:text="'書籍名:'+${book.title}"></p>
-				<!-- <a class="booklink"
-					th:href="@{books/{bookId}/{id}(bookId=*{book.book_id})}"></a> -->
-				<p th:text="'著者名:'+${book.author}"></p>
-				<p hidden th:text="*{book.page}" > </p>
-				<p hidden th:text="*{book.book_id}" > </p>
-				<p hidden th:text="*{book.max_num}"> </p>
-				<p hidden th:text="*{book.loan_day}"> </p>
-				
+			<div class="item rentalTable" th:each="book:${books}">
+				<div th:fragment="book_Element">
+					<img th:src="@{images/{bookId}.jpg(bookId=*{book.book_id})}">
+					<p th:text="'書籍名:'+${book.title}"></p>
+					<p th:text="'著者名:'+${book.author}"></p>
+					<p hidden th:text="*{book.page}"></p>
+					<p hidden th:text="*{book.book_id}"></p>
+					<p hidden th:text="*{book.max_num}"></p>
+					<p hidden th:text="*{book.loan_day}"></p>
+				</div>
 			</div>
 		</div>
-
 		<!-- 	タイトル検索 -->
 		<div class="grid">
 			<!-- 左のbookがループの指定/右がコントローラー -->
 			<div class="item" th:each="book:${seach}">
-				<img th:src="@{images/{bookId}.jpg(bookId=*{book.book_id})}">
-				<p th:text="'書籍名:'+${book.title}"></p>
-				<a class="booklink"
-					th:href="@{books/{bookId}/{id}(bookId=*{book.book_id})}"></a>
-				<p th:text="'著者名:'+${book.author}"></p>
+				<div th:replace=" /pages/mypage :: book_Element"></div>
 			</div>
 		</div>
 
@@ -73,26 +68,7 @@
 		<div class="grid">
 			<!-- 	左のbookがループの指定/右がコントローラー -->
 			<div class="item" th:each="book:${seachs}">
-				<img th:src="@{images/{bookId}.jpg(bookId=*{book.bookId})}">
-				<p th:text="'書籍名:'+${book.title}"></p>
-				<a class="booklink"
-					th:href="@{books/{bookId}/{id}(bookId=*{book.book_id})}"></a>
-				<p th:text="'著者名:'+${book.author}"></p>
-			</div>
-		</div>
-		-->
-		<!-- 原追加部分 -->
-		<!-- 書籍表示（画像）と編集・削除の画面遷移できます -->
-		<div class="grid">
-			<div class="item" th:each="book : ${books}">
-				<img th:src="@{/images/{bookId}.jpg(bookId=*{book.book_id})}">
-
-				<p th:text="'書籍名：'+${book.title}"></p>
-				<a class="booklink"
-					th:href="@{/books/ed/{bookId} (bookId=*{book.book_id}) }"></a>
-
-
-				<p th:text="'著者名：'+${book.author}"></p>
+				<div th:replace=" /pages/mypage :: book_Element"></div>
 			</div>
 		</div>
 

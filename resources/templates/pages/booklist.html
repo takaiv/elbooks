@@ -22,31 +22,32 @@
 						$('.rentalTable')
 								.click(
 										function() {
-
+											let div=$(this)
+											.children('div')
 											/* タイトルの取得とモーダルのタグテキストの値書き換え */
-											let p_book_title = $(this)
+											let p_book_title = div
 													.children('p')[0].innerText;
 											$('#book_title').val(p_book_title);
 
 											/* 著者の取得とモーダルのタグテキストの値書き換え */
-											let p_book_author = $(this)
+											let p_book_author = div
 													.children('p')[1].innerText;
 											$('#book_author')
 													.val(p_book_author);
 
 											/* ページ数の取得とモーダルのタグテキストの値書き換え */
-											let book_page = $(this).children(
+											let book_page = div.children(
 													'p')[2].innerText;
 											$('#book_page').val(book_page);
 
 											/* book_idの取得とモーダルのタグテキストの値書き換え */
-											let p_book_id = $(this).children(
+											let p_book_id = div.children(
 													'p')[3].innerText;
 											$('#book_id').val(p_book_id);
 											$('#rentalBookId').val(p_book_id);
 
 											/* 残り冊数の取得とモーダルのformボタンの値書き換え */
-											let p_book_maxnum = $(this)
+											let p_book_maxnum = div
 													.children('p')[4].innerText;
 											$('#book_maxnum').val(
 													parseInt(p_book_maxnum));
@@ -57,7 +58,7 @@
 																	+ "冊");
 
 											/* レンタル日の取得とモーダルのformボタンの値書き換え */
-											let p_book_loan_day = $(this)
+											let p_book_loan_day = div
 													.children('p')[5].innerText;
 											$('#book_loan_day').val(
 													p_book_loan_day);
