@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript"
@@ -49,6 +50,11 @@
 													.children('p')[4].innerText;
 											$('#book_maxnum').val(
 													parseInt(p_book_maxnum));
+											$('#inventory')
+													.text(
+															"在庫数"
+																	+ p_book_maxnum
+																	+ "冊");
 
 											/* レンタル日の取得とモーダルのformボタンの値書き換え */
 											let p_book_loan_day = $(this)
@@ -68,11 +74,10 @@
 											/* モーダルの編集用タグの値書き換え */
 											let element_2 = document
 													.getElementById('edit_link');
-											
-											if(element_2 !=null){
+
+											if (element_2 != null) {
 												element_2.href = `/books/ed/${p_book_id}`;
 											}
-											
 
 											/* レンタルformのアクション値書き換え */
 											let rental_button_form = document
@@ -123,14 +128,6 @@
 <body>
 	<div>
 		<div>
-			<!-- <p th:text="${book.title}"></p>
-			<p th:text="${book.author}"></p>
-			<p th:text="${book.max_num}"></p>
-			<p><a th:href=@{/elbooks/book}>貸出</a></p>
-			<p>
-				<button type="button" data-toggle="modal" data-target="#rentalModal">貸出モーダル</button>
-			</p> -->
-
 			<table>
 				<tr th:each="book: ${Book}" class="rentalTable">
 					<td th:text="${book.title}"></td>
@@ -139,18 +136,9 @@
 					<td><input type="button" onclick="rentalModalButton(event)"
 						th:id="${book.book_id}" class="btn btn-outline-primary eBtn"
 						data-toggle="modal" data-target="#rentalModal"></td>
-					<!-- <td><a
-						class="btn btn-outline-primary eBtn" data-toggle="modal" data-target="#rentalModal">貸出モーダル</a></td> -->
 				</tr>
 			</table>
 		</div>
-
-
-		<!-- <div th:each="book: ${Book}">
-		<p th:text="${book.title}"></p>
-		<p th:text="${book.author}"></p>
-		<p th:text="${book.max_num}"></p>
-	</div> -->
 
 		<!-- 貸出モーダル -->
 		<div th:fragment="rentalmodal" class="myForm">
@@ -158,15 +146,30 @@
 				aria-labelledby="Modal" aria-hidden="true">
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
+					
+						<!-- modal-header
+						<div class="modal-header">
+							<h5 class="modal-title">Modal title</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						/modal-header -->
+
+						<!-- modal-body -->
 						<div class="modal-body">
 							<div class="imageBlock">
 								<img id="image" class="bookImage" src="../images/book.png"
 									alt="">
-								<p class="inventory">在庫数1冊</p>
+								<p class="inventory" id="inventory">在庫数1冊</p>
 							</div>
 
-							<a href="#" class="edit" id="edit_link" sec:authorize="hasRole('ADMIN')">編集する</a>
-							
+							<a href="#" class="edit" id="edit_link"
+								sec:authorize="hasRole('ADMIN')">編集する</a>
+						</div>
+						<!-- /modal-body -->
+
+						<!-- modal-footer -->
+						<div class="modal-footer">
 							<!-- レンタルボタン -->
 							<form th:action="@{/elbooks/book/}" th:method="post"
 								id="rental_button_form">
@@ -174,9 +177,8 @@
 								<input type="hidden" id="rentalBookId" name="rentalBookId">
 								<!-- タスク：disabledかdisplayかvisibilityで表示非表示切り替えor活性/非活性切り替えできるようにする -->
 								<!-- タスク2：1ユーザーは同じタイトルの本を1冊だけ借りることができるロジック（判定文）を書く -->
-								<button type="submit" class="rental">借りる</button>
+								<button type="submit" class=" rental">借りる</button>
 							</form>
-
 							<!-- /レンタルボタン -->
 
 							<!-- 返却ボタン -->
@@ -186,15 +188,16 @@
 								<input type="hidden" id="rental_maxnum_2" name="max_num">
 								<!-- タスク1：disabledかdisplayかvisibilityで表示非表示切り替えor活性/非活性切り替えできるようにする -->
 								<!-- タスク2：借りている場合のみ返却できるロジック(select文の編集、htmlの書き換え、javascriptの判定文)を書く -->
-								<button type="submit" class="return">返却</button>
+								<button type="submit" class=" return">返却</button>
 							</form>
 							<!-- /返却ボタン -->
-
 						</div>
+						<!-- /modal-footer -->
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- /貸出モーダル -->
 	</div>
 </body>
 </html>
