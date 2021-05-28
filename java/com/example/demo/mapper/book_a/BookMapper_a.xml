@@ -8,6 +8,7 @@
 		select * from m_book;
 	</select>
 
+
 	<select id="selectOneBook"
 		resultType="com.example.demo.entity.display.lendingbook.LendingBook">
 		select * from m_book where book_id = #{book_id};
