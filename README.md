@@ -184,7 +184,7 @@ CREATE TABLE t_history(
     loan_day datetime,
     return_day datetime DEFAULT CURRENT_TIMESTAMP,
 
-    primary key(book_id,user_id),
+    primary key(book_id,user_id,loan_day),
     foreign key fk_book_id(book_id) REFERENCES m_book(book_id),
     foreign key fk_user_id(user_id) REFERENCES m_user(user_id)
 );
