@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+.contact_body {
+	display: block;
+	width: 80%;
+	text-align: left;
+	margin-top: 0; margin-right : auto;
+	margin-bottom: 15px; margin-left : auto;
+	border-bottom: 2px solid #666666;
+	font-size: 1.5em;
+	margin-right: auto; margin-bottom : 10;
+	margin-left: auto;
+}
+
+.contact_username {
+	display: inline-block;
+}
+
+.contact_usermail {
+	display: block;
+}
+
+.contact_inquiry_contents {
+	display: block;
+}
+
+.contact_inquiry_day {
+	display: inline-block;
+	float: right;
+}

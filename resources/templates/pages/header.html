@@ -23,7 +23,7 @@
 <body>
 	<header th:fragment="header">
 		<img src="../images/elbook_logo.jpeg">
-		<ul>
+		<ul >
 			<li
 				th:text="ようこそ：+${#authentication.principal.LoginUser.user_name}+さん"></li>
 			<li th:text="権限：+${#authentication.principal.authorities}"></li>
