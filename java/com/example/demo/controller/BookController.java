@@ -3,8 +3,6 @@
 
 package com.example.demo.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,17 +22,17 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 
-//findAllを使用してisdeleteが0のデータを表示
-	@GetMapping("/mypage")
-	public String findAll(Model model) {
-		model.addAttribute("books", bookService.findAll());
-			return "/pages/mypage";
-	}
+////findAllを使用してisdeleteが0のデータを表示
+//	@GetMapping("/mypage")
+//	public String findAll(Model model) {
+//		model.addAttribute("books", bookService.findAll());
+//			return "/pages/mypage";
+//	}
 
 // 書籍新規登録画面
 	@GetMapping("/book_add")
 	String bookadd() {
-		return "/pages/test/book_add";
+		return "/pages/book_add";
 	}
 
 // URL books/book_addより登録ボタン押下後に以下の処理を流す
@@ -42,10 +40,6 @@ public class BookController {
 	@PostMapping
 	public String create(@ModelAttribute Book book, String file, Model model) {
 		bookService.save(book);
-
-	    List<Book> test;
-		test = bookService.maxbook();
-
 			return "redirect:/mypage";
 	}
 

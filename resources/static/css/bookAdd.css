@@ -5,6 +5,7 @@
 
 .item {
   display: inline-block;
+  
 }
 
 .item-label::after {
@@ -34,4 +35,8 @@
 .form-button-login:hover {
   color: #ff4f50;
   background: #ffffff;
+}
+
+.padding{
+	padding-left: 0;
 }

@@ -21,17 +21,17 @@ public class BooklistController {
 	@Autowired
 	BooklistService booklistService;
 
-//	localhost:8080/mypage
-	@RequestMapping(value = {"/", "/mypage"})
+	//	localhost:8080/mypage
+	@RequestMapping(value = { "/", "/mypage" })
 	public String mypage(@AuthenticationPrincipal LoginUserDetailsImpl user, Model model) {
-		
-		LoginUser loginUser=user.getLoginUser();
-		int user_id = loginUser.getUser_id();
 
+		LoginUser loginUser = user.getLoginUser();
+		int user_id = loginUser.getUser_id();
+		//ログインユーザー情報の注入
 		model.addAttribute("loginUser", loginUser);
 
 		System.out.println(loginUser);
-		
+		//書籍リストの注入
 		model.addAttribute("books", booklistService.findAll_MypageBooks(user_id));
 		return "/pages/mypage";
 	}
@@ -47,13 +47,13 @@ public class BooklistController {
 
 		return "/pages/mypage";
 	}
-	
+
 	//headerの確認：大平
-//	@GetMapping("/header")
-//	public String tmp(Model model) {
-//
-//		
-//		return "/pages/header";
-//	}
+	//	@GetMapping("/header")
+	//	public String tmp(Model model) {
+	//
+	//		
+	//		return "/pages/header";
+	//	}
 
 }
