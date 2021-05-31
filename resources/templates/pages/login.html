@@ -64,9 +64,9 @@
 				type="text" name="username" autocomplete="name" class="form-input"
 				th:value="${loginForm.username != null } ? ${loginForm.username} : ''"
 				placeholder="ユーザー名" required autoforcus>
-			<p class="error">
-				<span class="invalid">(!) 名前を入力して下さい</span>
-			</p>
+			<!-- <p class="error">
+				 <span class="invalid">(!) 名前を入力して下さい</span> 
+			</p> -->
 		</div>
 		<div class="item">
 			<label class="item-label">パスワード</label><br> <input
@@ -74,12 +74,12 @@
 				class="form-input"
 				th:value="${loginForm.pass != null } ? ${loginForm.pass}: ''"
 				placeholder="パスワード" pattern="^[0-9A-Za-z]+$" required />
-			<p class="error">
+			<!-- <p class="error">
 				<span class="invalid">(!) パスワードを入力して下さい</span>
-			</p>
+			</p> -->
 		</div>
 		<div class="form-checkbox">
-			<input type="checkbox">ログインを保存する
+			<input type="checkbox" name="_spring_security_remember_me">ログインを保存する
 		</div>
 		<button type="button" class="userEntryModalButton" data-toggle="modal"
 		data-target="#userEntryModal">新規登録</button>

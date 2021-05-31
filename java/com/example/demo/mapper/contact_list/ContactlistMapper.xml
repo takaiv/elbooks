@@ -7,7 +7,7 @@
 
 	<!-- 問い合わせ一覧表示 -->
 	<select id="findAll" resultType="com.example.demo.entity.common.Contact">
-		select user_name, mail, inquiry_contents from m_user INNER JOIN t_inquiry ON m_user.user_id = t_inquiry.user_id
+		select user_name, mail, inquiry_contents,inquiry_day from m_user INNER JOIN t_inquiry ON m_user.user_id = t_inquiry.user_id
 	</select>
 
 </mapper>

@@ -6,7 +6,7 @@
 <head
 	th:replace="/pages/header :: meta_header('mypage',~{::link},~{::script})">
 <link rel="stylesheet" type="text/css" href="/css/bookHistory.css">
-<link th:href="@{/css/mypage.css}" rel="stylesheet" type="text/css">
+<link  rel="stylesheet" type="text/css" href="/css/mypage.css">
 <link rel="stylesheet" type="text/css" href="../css/book.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -44,7 +44,7 @@
 		<!-- 	本一覧表示 -->
 		<div class="grid">
 			<!-- 左のbookがループの指定/右がコントローラー -->
-			<div class="item rentalTable" th:each="book:${books}">
+			<div class="item rentalTable" th:each="book:${books}" th:classappend="${book.loan_day != null} ? 'rentalclass' ">
 				<div th:fragment="book_Element">
 					<img th:src="@{images/{bookId}.jpg(bookId=*{book.book_id})}">
 					<p th:text="'書籍名:'+${book.title}"></p>

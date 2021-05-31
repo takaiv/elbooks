@@ -21,13 +21,13 @@ public class Book_yController {
 	@GetMapping("/book")
     public String Modal(Model model) {
 		model.addAttribute("bookList",displayMapper.findBook());
-    	return "pages/book";
+    	return "pages/test/book";
     }
 //返却機能
 	@GetMapping("rental")
     public String BookHistory(Model model) {
 		model.addAttribute("rentalList",displayMapper.findByLoanUserId(1));
-    	return "pages/book_history";
+    	return "pages/test/book_history";
     }
 
 }
