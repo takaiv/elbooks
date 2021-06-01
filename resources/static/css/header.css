@@ -25,6 +25,7 @@ header {
 
 .header-menu {
 	text-decoration: none;
+	
 	color: #4b4b4b;
 }
 
@@ -81,4 +82,10 @@ header img {
 .menu li:hover>ul>li {
 	height: 3rem;
 	overflow: visible;
+}
+
+.username_block{
+	display: block;
+	width:15em;
+	min-width:15em;
 }

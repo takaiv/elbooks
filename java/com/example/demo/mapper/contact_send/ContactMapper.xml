@@ -7,7 +7,7 @@
 
 	<!-- 問い合わせを追加する -->
 	<insert id="save" parameterType="com.example.demo.entity.common.Contact">
-		insert into t_inquiry(user_id, inquiry_contents, category_id, inquiry_day) values(1, #{inquiry_contents}, 1,now())
+		insert into t_inquiry(user_id, inquiry_contents, category_id, inquiry_day) values(#{user_id}, #{inquiry_contents}, 1,now())
 	</insert>
 
 </mapper>

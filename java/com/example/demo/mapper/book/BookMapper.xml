@@ -14,7 +14,7 @@
     </select>
 
  	<insert id="save" useGeneratedKeys="true" keyProperty="book_id">
-  		insert into m_book (title, author) values(#{title}, #{author})
+  		insert into m_book (title, author,max_num,category_id,page) values(#{title}, #{author},#{max_num},#{category_id},#{page})
 
   	</insert>
 

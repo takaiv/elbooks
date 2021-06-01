@@ -23,13 +23,13 @@
 <body>
 	<header th:fragment="header">
 		<img src="../images/elbook_logo.jpeg">
-		<ul >
+		<ul class="username_block">
 			<li
 				th:text="ようこそ：+${#authentication.principal.LoginUser.user_name}+さん"></li>
 			<li th:text="権限：+${#authentication.principal.authorities}"></li>
 		</ul>
 		<nav class="header-nav">
-			<ul class="menu">
+			<ul class="menu padding">
 				<li><a th:href="@{/mypage}">HOME</a></li>
 				<li><a th:href="@{/loanlist}">貸出リスト</a></li>
 				<li><a th:href="@{/contact}">お問い合わせ</a></li>
